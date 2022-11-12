@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+
 namespace XBLA_AUTOCSHARP
 {
     internal static class Program
@@ -36,7 +38,8 @@ namespace XBLA_AUTOCSHARP
 
                 }
 
-
+                [DllImport("user32.dll")]
+                static extern bool SetForegroundWindow(IntPtr hWnd);
                 static void unPirs()
                 {
 
@@ -50,8 +53,10 @@ namespace XBLA_AUTOCSHARP
                     foreach (var file in files)
                     {
                         Console.WriteLine(file);
-                        var process = Process.Start(wxPirsPath, "\"" + file + "\"");
+                        var process = Process.Start(wxPirsPath, "\"" + file + "\"");  
                         Thread.Sleep(2500);
+                        var hWnd = process.MainWindowHandle;
+                        SetForegroundWindow(hWnd);
                         SendKeys.SendWait("%{F}");
                         Thread.Sleep(1000);
                         SendKeys.SendWait("{ENTER}");
