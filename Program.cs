@@ -55,7 +55,7 @@ namespace XBLA_AUTOCSHARP
                         Console.WriteLine(file);
                         var process = Process.Start(wxPirsPath, "\"" + file + "\"");  
                         Thread.Sleep(2500);
-                        var hWnd = process.MainWindowHandle;
+                        IntPtr hWnd = process.MainWindowHandle;
                         SetForegroundWindow(hWnd);
                         SendKeys.SendWait("%{F}");
                         Thread.Sleep(1000);
